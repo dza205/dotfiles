@@ -3,11 +3,17 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(set-frame-font "Iosevka Nerd Font 11" nil t)
+(add-to-list 'default-frame-alist '(font .  "Iosevka Nerd Font-9:antialias=true:hinting=false" ))
 (setq fancy-splash-image "~/Pictures/emacs.svg")
 (column-number-mode)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode t)
+
+;;Random shit
+(setq make-backup-files nil)
+
+
+
 ;s;packages
 (setq package-archives
 	  '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
@@ -146,4 +152,12 @@
 ;; (use-package powerline-evil
 ;;  :ensure t)
 ;; Language server, lang specific parts
-;;C/C++
+(use-package auctex
+  :ensure t
+  :defer t
+  :config
+  :hook (LaTeX-mode . (lambda ()
+            (push (list 'output-pdf "Zathura")
+                  TeX-view-program-election))))
+
+(add-hook 'LaTeX-mode-hook 'company-mode)
