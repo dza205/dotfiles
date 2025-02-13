@@ -3,7 +3,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(add-to-list 'default-frame-alist '(font .  "Iosevka Nerd Font-9:antialias=true:hinting=false" ))
+(add-to-list 'default-frame-alist '(font .  "Iosevka Nerd Font-8:antialias=true:hinting=false" ))
 (setq fancy-splash-image "~/Pictures/emacs.svg")
 (column-number-mode)
 (setq display-line-numbers-type 'relative)
@@ -53,7 +53,7 @@
  '(custom-safe-themes
    '("8363207a952efb78e917230f5a4d3326b2916c63237c1f61d7e5fe07def8d378" default))
  '(package-selected-packages
-   '(powerline-evil powerline flycheck-pos-tip flycheck company-box company lsp-treemacs lsp-ivy lsp-ui lsp-mode magit gruvbox-theme evil)))
+   '(auto-complete auctex powerline-evil powerline flycheck-pos-tip flycheck company-box company lsp-treemacs lsp-ivy lsp-ui lsp-mode magit gruvbox-theme evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,39 +75,13 @@
 (global-set-key (kbd "C-c m s") 'magit-status)
 (global-set-key (kbd "C-c m l") 'magit-log)
 
-;; Language Server Stuff
-(use-package lsp-mode
-  :ensure t
-  :hook ((c-mode . lsp)
-	 (c++-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp
-  :config
-  (setq lsp-keymap-prefix "C-c l")
-  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-  (setq lsp-file-watch-threshold 15000))
-
-(use-package lsp-ui
-  :ensure t
-  :commands (lsp-ui-mode)
-  :config
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-delay 0.5)
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  )
-
-(use-package lsp-ivy
-  :ensure t
-  :commands lsp-ivy-workspace-symbol)
 
 (use-package org
   :ensure t)
 
-(use-package lsp-treemacs
-  :ensure t
-  :commands lsp-treemacs-errors-list)
-
+(use-package auto-complete
+  :ensure t)
+(ac-config-default)
 ;; company
 (use-package company
   :ensure t
