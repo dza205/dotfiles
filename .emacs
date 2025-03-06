@@ -11,7 +11,7 @@
 
 ;;Random shit
 (setq make-backup-files nil)
-
+(electric-pair-mode 1)
 
 
 ;s;packages
@@ -53,7 +53,7 @@
  '(custom-safe-themes
    '("8363207a952efb78e917230f5a4d3326b2916c63237c1f61d7e5fe07def8d378" default))
  '(package-selected-packages
-   '(auto-complete auctex powerline-evil powerline flycheck-pos-tip flycheck company-box company lsp-treemacs lsp-ivy lsp-ui lsp-mode magit gruvbox-theme evil)))
+   '(flycheck-rust rust-mode solarized-theme haskell-mode auto-complete auctex powerline-evil powerline flycheck-pos-tip flycheck company-box company lsp-treemacs lsp-ivy lsp-ui lsp-mode magit gruvbox-theme evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -64,24 +64,21 @@
   :ensure t)
 (use-package keycast
   :ensure t)
+(use-package rust-mode
+  :ensure t)
 (use-package gruvbox-theme
   :ensure t
   :config (load-theme 'gruvbox-dark-hard))
+
 (use-package magit
   :ensure t
   :config (setq magit-auto-revert-mode nil))
 
 
-(global-set-key (kbd "C-c m s") 'magit-status)
-(global-set-key (kbd "C-c m l") 'magit-log)
-
 
 (use-package org
   :ensure t)
 
-(use-package auto-complete
-  :ensure t)
-(ac-config-default)
 ;; company
 (use-package company
   :ensure t
@@ -118,9 +115,15 @@
   :after flycheck
   :config
   (flycheck-pos-tip-mode))
+(use-package flycheck-rust
+  :ensure t)
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
  (use-package powerline
   :ensure t
   :config (powerline-default-theme))
+(use-package haskell-mode
+  :ensure t)
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
 ;; (use-package powerline-evil
@@ -135,3 +138,5 @@
                   TeX-view-program-election))))
 
 (add-hook 'LaTeX-mode-hook 'company-mode)
+(require 'rust-mode)
+(setq rust-format-on-save t)
